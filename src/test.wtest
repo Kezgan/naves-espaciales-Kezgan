@@ -1,0 +1,34 @@
+import naveEspaciales.*
+
+describe "naves" {
+	const np1 = new NavesDePasajeros(pasajeros = 200)
+	const nc1 = new NavesDeCombate()
+	const nb1 = new NavesBaliza(color = "Naranja")
+	
+	fixture {
+		np1.cargarComida(5000)
+		np1.cargarBebida(5000)
+		np1.acelerar(12000)
+	}
+	
+	test "nave baliza inicial" {
+		nb1.cambiarColorDeBaliza("Rojo")
+		
+		assert.equals(nb1.color() , "Rojo" )
+	}
+	
+	test "nave combate inicial" {
+		nc1.desplegarMisiles()
+		nc1.emitirMensaje("Alerta")
+		nc1.emitirMensaje("Stop")
+		
+		assert.that(nc1.esDesplegado())
+		assert.equals(2 , nc1.mensajesEmitidos().size())
+		assert.equals("Stop" , nc1.ultimoMensajeEmitido())
+		assert.equals("Alerta" , nc1.primerMensajeEmitido())	
+	}
+	
+	test "nave pasajero inicial" {
+		assert.equals(200 , np1.cantidadPasajeros())
+	}
+}
